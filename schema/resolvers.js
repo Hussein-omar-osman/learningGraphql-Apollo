@@ -60,6 +60,13 @@ const resolvers = {
       });
       return userUpdated;
     },
+    deleteUser: (parent, { id }) => {
+      const user = _.find(UserList, { id: Number(id) });
+      let index = UserList.findIndex((user) => user.id === Number(id));
+      UserList.splice(index, 1);
+
+      return user;
+    },
   },
 };
 

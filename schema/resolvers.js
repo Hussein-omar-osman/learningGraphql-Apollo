@@ -1,6 +1,8 @@
 const { UserList, MovieList } = require('../FakeData');
 const _ = require('lodash');
 
+// Lodash is a popular javascript based library which provides 200+ functions to facilitate web development. It provides helper functions like map, filter,
+
 const resolvers = {
   Query: {
     users: () => {
@@ -20,13 +22,22 @@ const resolvers = {
     },
 
     inTheaterOrNot: (parent, { value }) => {
-      const movies = _.filter(MovieList, { isInTheaters: value });
+      const movies = MovieList.filter((movie) => movie.isInTheaters === value);
       return movies;
     },
 
     findMovieByName: (parent, { name }) => {
       const movie = _.find(MovieList, { name: name });
       return movie;
+    },
+  },
+
+  User: {
+    favoriteMovies: () => {
+      return MovieList.filter(
+        (movie) =>
+          movie.yearOfPublication >= 2000 && movie.yearOfPublication <= 2020
+      );
     },
   },
 };

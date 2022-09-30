@@ -23,6 +23,7 @@ const typeDefs = gql`
     movies: [Movie!]!
     movie(id: ID!): Movie!
     inTheaterOrNot(value: Boolean!): [Movie]
+    findMovieByName(name: String!): Movie
   }
 
   enum Natinality {

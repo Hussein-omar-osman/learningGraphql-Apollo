@@ -23,6 +23,11 @@ const resolvers = {
       const movies = _.filter(MovieList, { isInTheaters: value });
       return movies;
     },
+
+    findMovieByName: (parent, { name }) => {
+      const movie = _.find(MovieList, { name: name });
+      return movie;
+    },
   },
 };
 

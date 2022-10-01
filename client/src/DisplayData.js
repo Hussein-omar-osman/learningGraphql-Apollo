@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { gql, useQuery, useLazyQuery } from '@apollo/client';
+import { gql, useQuery, useLazyQuery, useMutation } from '@apollo/client';
+
+const hardCodedUser = {
+  name: 'hussein',
+  username: 'hhavicci',
+  age: 22,
+};
 
 const GET_ALL_USERS = gql`
   query GetUsers {
@@ -34,11 +40,22 @@ const GET_MOVIE_BY_NAME = gql`
   }
 `;
 
+const CREATE_USER_MUTATION = gql`
+  mutation CreateUser($input: CreateUserInput!) {
+    createUser(input: $input) {
+      name
+      username
+      age
+    }
+  }
+`;
+
 const DisplayData = () => {
   const [inputData, setInputData] = useState('');
   const { data, loading } = useQuery(GET_ALL_USERS);
   const { data: movies } = useQuery(GET_ALL_Movies);
   const [fetchMovie, { data: movieSearched }] = useLazyQuery(GET_MOVIE_BY_NAME);
+  const [createUser] = useMutation(CREATE_USER_MUTATION);
 
   // console.log(data?.users);
   // console.log(movies?.movies);
@@ -48,12 +65,27 @@ const DisplayData = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <div style={{ flex: 3 }}>
-        <div>{data && data.users.map((user) => <h4>{user.name}</h4>)}</div>
+        <div>
+          {data &&
+            data.users.map((user) => (
+              <div key={user.id}>
+                <h2>{user.name}</h2>
+                <p>{user.nationality}</p>
+              </div>
+            ))}
+        </div>
         <div>
           {movies && movies?.movies.map((movie) => <h4>{movie.name}</h4>)}
         </div>
       </div>
       <div style={{ flex: 2 }}>
+        <h2>On clicking this btn you will create a new user</h2>
+        <button
+          onClick={() => createUser({ variables: { input: hardCodedUser } })}
+        >
+          Create New User
+        </button>
+        <h3>Search Movies</h3>
         <input
           type='text'
           placeholder='Search...'

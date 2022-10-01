@@ -52,7 +52,7 @@ const CREATE_USER_MUTATION = gql`
 
 const DisplayData = () => {
   const [inputData, setInputData] = useState('');
-  const { data, loading } = useQuery(GET_ALL_USERS);
+  const { data, loading, refetch } = useQuery(GET_ALL_USERS);
   const { data: movies } = useQuery(GET_ALL_Movies);
   const [fetchMovie, { data: movieSearched }] = useLazyQuery(GET_MOVIE_BY_NAME);
   const [createUser] = useMutation(CREATE_USER_MUTATION);
@@ -81,7 +81,10 @@ const DisplayData = () => {
       <div style={{ flex: 2 }}>
         <h2>On clicking this btn you will create a new user</h2>
         <button
-          onClick={() => createUser({ variables: { input: hardCodedUser } })}
+          onClick={() => {
+            createUser({ variables: { input: hardCodedUser } });
+            refetch();
+          }}
         >
           Create New User
         </button>

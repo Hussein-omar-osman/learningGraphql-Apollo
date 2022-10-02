@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { GET_THE_CHARACTERS } from './RickMortySchema/query';
 
 const RickMorty = () => {
@@ -40,7 +41,12 @@ const RickMorty = () => {
       >
         {data?.characters?.results?.map((char) => (
           <div key={char.id} style={{}}>
-            <img src={char.image} alt={char.name} width={200} height={200} />
+            <LazyLoadImage
+              src={char.image}
+              alt={char.name}
+              width={200}
+              height={200}
+            />
             <h3>{char.name}</h3>
           </div>
         ))}
@@ -56,7 +62,7 @@ const RickMorty = () => {
           marginBottom: 200,
         }}
       >
-        {[1, 2, 3, 4, 5].map((page) => (
+        {[1, 2, 3, 4, 5, 6, 7].map((page) => (
           <button
             style={{ padding: '10px', cursor: 'pointer' }}
             onClick={() => {

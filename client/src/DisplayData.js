@@ -1,54 +1,17 @@
 import React, { useState } from 'react';
-import { gql, useQuery, useLazyQuery, useMutation } from '@apollo/client';
+import { useQuery, useLazyQuery, useMutation } from '@apollo/client';
+import {
+  GET_ALL_USERS,
+  GET_ALL_Movies,
+  GET_MOVIE_BY_NAME,
+  CREATE_USER_MUTATION,
+} from './localHost_gql/query';
 
 const hardCodedUser = {
   name: 'hussein',
   username: 'hhavicci',
   age: 22,
 };
-
-const GET_ALL_USERS = gql`
-  query GetUsers {
-    users {
-      id
-      age
-      name
-      nationality
-      username
-    }
-  }
-`;
-const GET_ALL_Movies = gql`
-  query Movies {
-    movies {
-      id
-      name
-      yearOfPublication
-      isInTheaters
-    }
-  }
-`;
-
-const GET_MOVIE_BY_NAME = gql`
-  query FindMovieByName($name: String!) {
-    findMovieByName(name: $name) {
-      id
-      name
-      yearOfPublication
-      isInTheaters
-    }
-  }
-`;
-
-const CREATE_USER_MUTATION = gql`
-  mutation CreateUser($input: CreateUserInput!) {
-    createUser(input: $input) {
-      name
-      username
-      age
-    }
-  }
-`;
 
 const DisplayData = () => {
   const [inputData, setInputData] = useState('');

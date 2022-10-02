@@ -1,13 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { GET_THE_CHARACTERS } from './RickMortySchema/query';
+import { Box, Pagination, PaginationItem } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const RickMorty = () => {
   const [getCharacters, { data, error, loading }] =
     useLazyQuery(GET_THE_CHARACTERS);
+  const [pageInfo, setPageInfo] = useState(1);
   console.log(data);
+  console.log(pageInfo);
   if (error) console.log(error);
+
   useEffect(() => {
     getCharacters({
       variables: {
@@ -62,7 +68,7 @@ const RickMorty = () => {
           marginBottom: 200,
         }}
       >
-        {[1, 2, 3, 4, 5, 6, 7].map((page) => (
+        {/* {[1, 2, 3, 4, 5, 6, 7].map((page) => (
           <button
             style={{ padding: '10px', cursor: 'pointer' }}
             onClick={() => {
@@ -75,8 +81,23 @@ const RickMorty = () => {
           >
             {page}
           </button>
-        ))}
+        ))} */}
       </div>
+      <Box
+        sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      >
+        <Pagination
+          count={data?.characters?.info?.pages}
+          onChange={(e, page) => {
+            console.log(page);
+            getCharacters({
+              variables: {
+                page: page,
+              },
+            });
+          }}
+        />
+      </Box>
     </>
   );
 };

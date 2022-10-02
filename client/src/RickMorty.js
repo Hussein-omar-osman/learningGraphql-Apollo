@@ -3,7 +3,8 @@ import { useLazyQuery } from '@apollo/client';
 import { GET_THE_CHARACTERS } from './RickMortySchema/query';
 
 const RickMorty = () => {
-  const [getCharacters, { data, error }] = useLazyQuery(GET_THE_CHARACTERS);
+  const [getCharacters, { data, error, loading }] =
+    useLazyQuery(GET_THE_CHARACTERS);
   console.log(data);
   if (error) console.log(error);
   useEffect(() => {
@@ -13,6 +14,19 @@ const RickMorty = () => {
       },
     });
   }, []);
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <h1>Loading Characters...</h1>
+      </div>
+    );
+  }
   return (
     <>
       <div

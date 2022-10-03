@@ -1,6 +1,7 @@
 import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import RickMorty from './RickMorty';
+import TrialDates from './TrialDates';
 // import DisplayData from './DisplayData';
 
 function App() {
@@ -10,9 +11,16 @@ function App() {
   });
   return (
     <ApolloProvider client={client}>
-      <div className='App'>
-        <h1>Hello world</h1>
-        <RickMorty />
+      <div
+        style={{
+          dispaly: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <h1>Pick a Date</h1>
+
+        <TrialDates />
       </div>
     </ApolloProvider>
   );
